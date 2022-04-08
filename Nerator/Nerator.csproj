@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <!--<TargetFramework>net48</TargetFramework>-->
-    <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;netcoreapp3.1-windows;net5.0-windows;net6.0-windows;net7.0-windows</TargetFrameworks>
     <ApplicationIcon>Assets\ICO.ico</ApplicationIcon>
     <StartupObject>Nerator.Nerator</StartupObject>
     <ApplicationManifest>App.manifest</ApplicationManifest>
@@ -17,8 +17,8 @@
     <Version>$([System.DateTime]::Today.ToString(yy)).$([System.DateTime]::Today.ToString(MM)).$([System.DateTime]::Today.ToString(dd)).$([System.DateTime]::Now.ToString(HH))$([System.DateTime]::Now.ToString(mm))</Version>
     <AssemblyName>Nerator</AssemblyName>
     <RootNamespace>$(AssemblyName)</RootNamespace>
-    <AnalysisLevel>latest</AnalysisLevel>
-    <LangVersion>latest</LangVersion>
+    <AnalysisLevel>preview</AnalysisLevel>
+    <LangVersion>preview</LangVersion>
     <Copyright>Copyright © $([System.DateTime]::Today.ToString(yyyy)) $(Company)</Copyright>
     <Configurations>Debug;Release</Configurations>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -39,7 +39,15 @@
     <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)'=='net5.0-windows'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='GitHub|AnyCPU'">
+    <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='GitHub|AnyCPU'">
+    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp3.1-windows' OR '$(TargetFramework)'=='net5.0-windows' OR '$(TargetFramework)'=='net6.0-windows' OR '$(TargetFramework)'=='net7.0-windows'">
     <DisableFody>true</DisableFody>
   </PropertyGroup>
 
@@ -55,10 +63,9 @@
   </ItemGroup>
     
   <ItemGroup>
-    <PackageReference Include="Conforyon" Version="1.4.7.6" />
-    <PackageReference Include="ReaLTaiizor" Version="3.7.8.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1-beta1" />
-    <PackageReference Include="Costura.Fody" Version="5.0.2">
+    <PackageReference Include="ReaLTaiizor" Version="3.7.8.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Costura.Fody" Version="5.8.0-alpha0098">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; compile</IncludeAssets>
     </PackageReference>
